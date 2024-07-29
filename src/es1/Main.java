@@ -6,7 +6,7 @@ public class Main {
     public static void main(String[] args) {
         int[] myArray = new int[5];
         Scanner scanner = new Scanner(System.in);
-
+        caio:
         while (true) {
             int i;
             int valoreScelto;
@@ -29,6 +29,7 @@ public class Main {
                 System.out.println("Inserisci un numero da 1 a 10, da inserire nella locazione scelta come valore");
                 try {
                     valoreScelto = scanner.nextInt();
+                    if (valoreScelto == 0) break caio;
                     if (valoreScelto < 1 || valoreScelto > 10) {
                         System.err.println("Il numero deve essere compreso tra 1 e 10.");
                     } else {
@@ -41,11 +42,11 @@ public class Main {
                 }
             }
 
-            if (valoreScelto == 0) break;
 
             myArray[i] = valoreScelto;
             System.out.println("Valore inserito in myArray[" + i + "]: " + myArray[i]);
         }
         scanner.close();
+
     }
 }
