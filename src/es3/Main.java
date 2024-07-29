@@ -12,17 +12,18 @@ public class Main {
         ContoOnLine contoOnLine = new ContoOnLine("gabriel", 2500, 1000);
         while (true) {
             int scelta;
+            double importo;
             while (true) {
                 System.out.println("Seleziona il contro per effettuare il prelievo: 1 per il conto corrente, 2 per il conto online e 3 per uscire");
                 try {
                     scelta = scanner.nextInt();
                     if (scelta < 1 || scelta > 3) {
-                        System.out.println("Scelta non valida. Riprova, devi inserire un numero da 1 a 3!");
+                        System.err.println("Scelta non valida. Riprova, devi inserire un numero da 1 a 3!");
                     } else {
                         break;
                     }
                 } catch (InputMismatchException e) {
-                    System.out.println("Inserisci un numero valido.");
+                    System.err.println("Inserisci un numero valido.");
                     System.out.println(e.getMessage());
                     scanner.next(); // Consuma l'input non valido
                 }
@@ -30,9 +31,21 @@ public class Main {
             if (scelta == 3) {
                 break;
             }
-            System.out.println("Inserisci l'importo da prelevare: ");
-            double importo = scanner.nextDouble();
-
+            while (true) {
+                System.out.println("Inserisci l'importo da prelevare: ");
+                try {
+                    importo = scanner.nextDouble();
+                    if (importo <= 0) {
+                        System.err.println("importo non valido");
+                    } else {
+                        break;
+                    }
+                } catch (InputMismatchException e) {
+                    System.err.println("Inserisci un importo.");
+                    System.out.println(e.getMessage());
+                    scanner.next();
+                }
+            }
             try {
                 if (scelta == 1) {
                     contoCorrente.preleva(importo);
@@ -41,12 +54,12 @@ public class Main {
                     contoOnLine.preleva(importo);
                     System.out.println("Prelievo effettuato. Saldo attuale: " + contoOnLine.getSaldo());
                 } else {
-                    System.out.println("Scelta non valida.");
+                    System.err.println("Scelta non valida.");
                 }
             } catch (BancaException e) {
-                System.out.println("Errore: " + e.getMessage());
+                System.err.println(e.getMessage());
             } catch (Exception e) {
-                System.out.println("Errore generico: " + e.getMessage());
+                System.err.println("Errore generico: " + e.getMessage());
             }
 
         }
